@@ -1,5 +1,5 @@
 {
-	"name": "mad/tools",
+	"name": "stormfactory/tools",
 	"type": "library",
 	"description": "madstorm's web developing basic tools",
 	"keywords": ["mad","tools"],
