@@ -64,15 +64,20 @@ class MadService {
 		return $rv;
 	}
 	function row($where) {
-		$where = isArray($where) ? $where : [$this->key => $where];
 		return $this->fetchWhere($where);
 	}
 	function fetch($key) {
 		return $this->row($key);
 	}
-	function fetchWhere($params) {
-		return $this->query()->where($params)->page(1)->fetch();
+
+	private function where($params) {
+		return is_string($where) || is_numeric($where) ? [$this->key => $where] : $where;
 	}
+
+	function fetchWhere($params) {
+		return $this->query()->where($this->where($params))->page(1)->fetch();
+	}
+
 	function save($set) {
 		if( is_array($set) ) {
 			$set = (object)$set;
@@ -82,26 +87,27 @@ class MadService {
 		}
 		return $this->update($set, $set->{$this->key});
 	}
+
 	function insert($set) {
 		return $this->query()->insert($set)->execute();
 	}
+
 	function update($set, $key) {
-		if(isset($set->{$this->key}) ) {
-			unset($set->{$this->key});
-		}
-		return $this->query()->update($set)->where([$this->key => $key])->execute();
+		$this->updateWhere($set, [$this->key => $key]);
+		return $this->query()->update($set)->where()->execute();
 	}
+
 	function updateWhere($set, $where) {
+		unset($set->{$this->key});
 		return $this->query()->update($set)->where($where)->execute();
 	}
 
 	function delete($params) {
-		$params = isArray( $params ) ? $params : [$this->key => $id];
 		return $this->deleteWhere($params);
 	}
 
 	function deleteWhere($where) {
-		return $this->query()->delete($where)->execute();
+		return $this->query()->delete($this->where($where))->execute();
 	}
 
 	function count($where = []) {

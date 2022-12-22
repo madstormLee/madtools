@@ -82,7 +82,7 @@ class MadView {
 	function __toString() {
 		try {
 			return $this->getContents();
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			return $e->getMessage();
 		}
 	}

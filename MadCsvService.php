@@ -32,7 +32,7 @@ class MadCsvService {
 	}
 	function install() {
 		if( ! is_writable($this->file) ) {
-			throw new Exception('저장 공간이 준비되지 않았습니다.');
+			throw new \Exception('저장 공간이 준비되지 않았습니다.');
 		}
 		file_put_contents($this->file, '');
 		return $this->appendCsv($this->headers());
@@ -102,7 +102,7 @@ class MadCsvService {
 	function delete($idx) {
 		$list = file($this->file);
 		if( ! isset( $list[$idx] ) ) {
-			throw new Exception('존재하지 않는 행입니다.');
+			throw new \Exception('존재하지 않는 행입니다.');
 		}
 		unset($list[$idx]);
 		return $this->dumpIn($list);

@@ -122,7 +122,7 @@ class MadL10N {
 		$this->data->setData( $data );
 	}
 	function __set( $key, $value ) {
-		throw new Exception( 'Not accessable!' );
+		throw new \Exception( 'Not accessable!' );
 	}
 	function __get( $key ) {
 		return $this->data->$key;

@@ -11,7 +11,7 @@ class MadUploader implements IteratorAggregate {
 	function setDir( $dir ) {
 		if ( ! is_dir($dir) ) {
 			if( ! mkdir($dir , 0777, true) ) {
-				throw new Exception("Fail to create dir: $dir");
+				throw new \Exception("Fail to create dir: $dir");
 			}
 		}
 		$this->dir = $dir;
@@ -20,7 +20,7 @@ class MadUploader implements IteratorAggregate {
 
 	function upload() {
 		if(! is_writable($this->dir) ) {
-			throw new Exception("저장할 수 없는 디렉토리입니다: " . $this->dir);
+			throw new \Exception("저장할 수 없는 디렉토리입니다: " . $this->dir);
 		}
 		setlocale(LC_ALL, "C.UTF-8");
 		$rv = [];
@@ -34,7 +34,7 @@ class MadUploader implements IteratorAggregate {
 			$row->name =  $this->getAvailableName(basename($row->name));
 			$row->dest = $this->dir . $row->name;
 			if (! move_uploaded_file($row->tmp_name, $row->dest)) {
-				throw new Exception('파일업로드 오류 입니다. 확인 후 이용하여 주세요.');
+				throw new \Exception('파일업로드 오류 입니다. 확인 후 이용하여 주세요.');
 			}
 			$rv[] = $row;
 		}

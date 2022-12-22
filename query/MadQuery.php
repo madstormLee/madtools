@@ -213,7 +213,7 @@ class MadQuery implements ArrayAccess, IteratorAggregate, Countable {
 
 			$where = $this->where->statement();
 			if( empty( trim($where) ) ) {
-				throw new Exception('update문에는 where절이 반드시 필요합니다.');
+				throw new \Exception('update문에는 where절이 반드시 필요합니다.');
 			}
 			$this->params->assign( $this->where->data() );
 			return "update `$this->table` $this->set $where";
@@ -221,7 +221,7 @@ class MadQuery implements ArrayAccess, IteratorAggregate, Countable {
 			$this->params->assign( $this->where->data() );
 			$where = $this->where->statement();
 			if( empty( trim($where) ) ) {
-				throw new Exception('delete문에는 where절이 반드시 필요합니다.');
+				throw new \Exception('delete문에는 where절이 반드시 필요합니다.');
 			}
 			return "delete from `$this->table` $where";
 		}

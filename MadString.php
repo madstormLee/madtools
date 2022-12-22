@@ -116,7 +116,7 @@ class MadString implements IteratorAggregate {
 			$this->string = call_user_func_array( $func, $args );
 			return $this;
 		}
-		throw new Exception('Method not found.');
+		throw new \Exception('Method not found.');
 	}
 	function __toString() {
 		return $this->string;

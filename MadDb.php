@@ -25,7 +25,7 @@ class MadDb {
 	public static function createDb($name) {
 		$config = MadConfig::getInstance();
 		if(! isset($config->db)) {
-			throw new Exception('DB info not found!');
+			throw new \Exception('DB info not found!');
 		}
 		$info = $config->db->$name;
 
@@ -61,7 +61,7 @@ class MadDb {
 			$info->driver = 'mysql';
 		}
 		if(! in_array($info->driver, ['mysql', 'sqlite'])) {
-			throw new Exception("Driver not supported: $info->driver", 500);
+			throw new \Exception("Driver not supported: $info->driver", 500);
 		}
 		$driver = $info->driver;
 		$this->conn = self::$driver($info);
@@ -72,7 +72,7 @@ class MadDb {
 		$this->params = $params;
 
 		if( empty( $this->query ) ) {
-			throw new Exception('No Query', 500);
+			throw new \Exception('No Query', 500);
 		}
 
 		try {
@@ -87,9 +87,9 @@ class MadDb {
 				}
 			}
 			$this->result = $this->statement->execute();		
-		} catch(PDOException $e) {
+		} catch(\PDOException $e) {
 			$message = $e->getMessage() . "\nquery: " . $this->prettyQuery() . "\nparams: " . print_r($params, true);
-			throw new Exception( $message );
+			throw new \Exception( $message );
 		}
 		return $this;
 	}

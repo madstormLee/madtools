@@ -26,7 +26,7 @@ class MadJson implements \IteratorAggregate {
 
 	function getFileInfo() {
 		if ( ! is_file( $this->file ) ) {
-			throw new Exception('File Not Found');
+			throw new \Exception('File Not Found');
 		}
 		return new SplFileInfo( $this->file );
 	}
@@ -59,7 +59,7 @@ class MadJson implements \IteratorAggregate {
 		}
 		$json = json_decode( file_get_contents($file), false );
 		if( json_last_error() ) {
-			throw new Exception( baseName($file) . " 에 " .  json_last_error_msg() . ' 가 있습니다.' );
+			throw new \Exception( baseName($file) . " 에 " .  json_last_error_msg() . ' 가 있습니다.' );
 		}
 		if(! empty($json)) {
 			$this->assign( $json );
@@ -97,10 +97,10 @@ class MadJson implements \IteratorAggregate {
 
 	function save() {
 		if( empty($this->file) ) {
-			throw new Exception('No file.');
+			throw new \Exception('No file.');
 		}
 		if(! is_writable( $this->file ) ) {
-			throw new Exception('Not writable.');
+			throw new \Exception('Not writable.');
 		}
 		$dir = dirName( $this->file );
 		if ( ! is_dir( $dir ) ) {

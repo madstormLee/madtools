@@ -139,7 +139,7 @@ class MadIndex extends MadData {
 	}
 	function curry( $listName, $column, $searchKey = 'id' ) {
 		if ( ! class_exists( $listName ) ) {
-			throw new Exception("no $listName class");
+			throw new \Exception("no $listName class");
 		}
 		$this->init();
 		$list = new $listName;
@@ -164,7 +164,7 @@ class MadIndex extends MadData {
 	}
 	function searchField( $field, $values ) {
 		if ( ! $this->isField( $field ) ) {
-			throw new Exception('Search field not exists!');
+			throw new \Exception('Search field not exists!');
 		}
 		$type = $this->model->getConfig()->$field->type;
 

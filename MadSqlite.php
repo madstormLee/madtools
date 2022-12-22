@@ -20,7 +20,7 @@ class MadSqlite {
 		$this->params = $params;
 
 		if( empty( $this->query ) ) {
-			throw new Exception('No Query', 500);
+			throw new \Exception('No Query', 500);
 		}
 
 		try {
@@ -35,9 +35,9 @@ class MadSqlite {
 				}
 			}
 			$this->result = $this->statement->execute();		
-		} catch(PDOException $e) {
+		} catch(\PDOException $e) {
 			$message = $e->getMessage() . "\nquery: " . $this->prettyQuery() . "\nparams: " . print_r($params, true);
-			throw new Exception( $message );
+			throw new \Exception( $message );
 		}
 		return $this;
 	}

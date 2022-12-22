@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<title>page control</title>
+	</head>
+	<body style='display: none;'>
+		<h1><?=$command ?></h1>
+		<ol>
+			<?php foreach( $params as $param ): ?>
+			<li><?=$param ?></li>
+			<?php endforeach; ?>
+		</ol>
+		<script>
+
+<?php if($command === 'alert'): ?>
+	alert( '<?=$arg0?>' );
+	<?php if( isset($arg1) && $arg1 == 'close' ): ?>
+	window.close();
+	<?php elseif( isset($arg1) && $arg1 == 'back' ): ?>
+		<?php if ( isset($_SERVER['HTTP_REFERER']) ) : ?>
+	location.replace('<?=$_SERVER['HTTP_REFERER']; ?>');
+		<?php else: ?>
+	history.back();
+		<?php endif; ?>
+	<?php elseif( isset($arg1) && $arg1 == 'reload' ): ?>
+	parent.location.reload();
+	<?php elseif( isset($arg1) && $arg1 == 'closePopupWindow' ): ?>
+	parent.document.getElementById('popupWindow').style.display = 'none';
+	<?php else: ?>
+	<?php $arg1 || $arg1 = '/'; ?>
+	location.assign( '<?=$arg1 ?>' );
+	<?php endif; ?>
+
+
+<?php elseif($command === 'redirect'): ?>
+	<?php $arg0 || $arg0 = '/'; ?>
+	location.assign('<?=urldecode($arg0)?>');
+
+
+<?php elseif($command === 'close'): ?>
+	<?php $arg0 || $arg0 = '/'; ?>
+	<?php if( isset($arg0) && $arg0 == 'reload' ): ?>
+	opener.location.replace('/');
+	<?php else: ?>
+	opener.location.replace('<?=$arg0?>');
+	<?php endif; ?>
+	self.close();
+<?php endif; ?>
+
+		</script>
+	</body>
+</html>

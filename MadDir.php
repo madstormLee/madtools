@@ -155,7 +155,7 @@ class MadDir extends MadFile {
 		foreach( $files as $file ) {
 			$destFile = $destDir . '/' . basename($file);
 			if ( ! copy( $file, $destFile ) ) {
-				throw new Exception( 'copy error occured.' );
+				throw new \Exception( 'copy error occured.' );
 			}
 			++$i;
 		}
@@ -194,7 +194,7 @@ class MadDir extends MadFile {
 				mkdir("$dst_dir/$file");
 			} elseif (!isset($dst_tree[$file]) && $src_mtime || isset($dst_tree[$file]) && $src_mtime > $dst_tree[$file]) {
 				if( ! copy("$src_dir/$file", "$dst_dir/$file")) {
-					throw new Exception("File '$src_dir/$file' could not be copied!");
+					throw new \Exception("File '$src_dir/$file' could not be copied!");
 				}
 				$log[] = "Copied '$src_dir/$file' to '$dst_dir/$file'";
 				@touch("$dst_dir/$file", strToTime($src_mtime) );
@@ -206,7 +206,7 @@ class MadDir extends MadFile {
 	function deleteAll( $file='' ) {
 		$dir = empty( $file ) ? $this->file : $file;
 		if ( ! is_dir( $dir ) ) {
-			throw new Exception( $dir . ' is not a directory.' );
+			throw new \Exception( $dir . ' is not a directory.' );
 		}
 		$files = array_filter( glob( $dir . '/{*,.*}', GLOB_BRACE ), function( $file ) {
 			return ( is_dir( $file ) && substr( $file, -1 ) == '.' ) ? false:true;

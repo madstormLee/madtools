@@ -48,7 +48,7 @@ class MadOci extends MadDb {
 		if(! $this->result ) {
 			$e = oci_error();
 			$message = $e['message']. "\nquery: " . $this->prettyQuery() . ",\nparams: " . print_r($this->params, true);
-			throw new Exception( $message );
+			throw new \Exception( $message );
 		}
 		return $this;
 	}

@@ -13,7 +13,7 @@ class MadOracle {
 		$this->conn = oci_connect($info->username, $info->password, $tns, 'AL32UTF8');
 		if (! $this->conn) {
 			$e = oci_error();
-			throw new Exception(htmlentities($e['message'], ENT_QUOTES));
+			throw new \Exception(htmlentities($e['message'], ENT_QUOTES));
 		}
 	}
 }

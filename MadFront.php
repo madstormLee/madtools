@@ -1,6 +1,30 @@
 <?php
 namespace mad\tools; 
 
+define('BR', '<br />');
+define('MAD', dirname(__DIR__) . '/');
+define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
+
+function pre( $value ) {
+	echo '<pre>' . $value . '</pre>';
+}
+function printR($data) {
+  echo '<pre class="printR">' . print_r( $data, true ) . '</pre>';
+}
+function varDump( $data ) {
+  echo '<pre class="varDump">' . var_dump($data) . '</pre>';
+}
+
+spl_autoload_register(function ($class) {
+	if(file_exists("$class.php")) {
+		return require("$class.php");
+	}
+	$file = ROOT . str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
+	return file_exists($file) && require($file);
+});
+
+return MadFront::getInstance();
+
 class MadFront {
 	private $data = [];
 	private $htmlDirectServe = true;
@@ -41,6 +65,9 @@ class MadFront {
 	}
 
 	public static function getInstance() {
+		if(! isset($_SERVER['REDIRECT_URL'])) {
+			self::htaccess();
+		}
 		static $i; $i || $i = new self(); return $i;
 	}
 
@@ -182,7 +209,7 @@ class MadFront {
 	}
 
 	function serveCommand($string) {
-		$view = new MadView(MAD . '/pageControl.html');
+		$view = new MadView(__DIR__ . '/pageControl.html');
 		list($view->command, $view->contents) = explode(':', $string);
 		$params = [];
 		foreach( explode(',', $view->contents) as $key => $value ) {
@@ -235,7 +262,7 @@ class MadFront {
 		return false;
 	}
 
-	function errorHandler($errno, $errstr, $errfile, $errline) {
+	static function errorHandler($errno, $errstr, $errfile, $errline) {
 		$errorNames = [
 			1 =>	'Fatal',
 			2	=> 'WARNING.',

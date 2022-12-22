@@ -281,7 +281,7 @@ class MadFile implements IteratorAggregate, Countable {
 		$target = $this->getFile();
 		$dest = dirName( $target ) . '/' . $name;
 		if ( ! rename( $target, $dest ) ) {
-			throw new Exception( 'Rename Failure!' );
+			throw new \Exception( 'Rename Failure!' );
 		}
 		$this->file = $dest;
 		return $this;
@@ -355,6 +355,6 @@ class MadFile implements IteratorAggregate, Countable {
 		if ( $info instanceof SplFileInfo ) {
 			return call_user_func_array( [$info, $method], $args);
 		}
-		throw new Exception("There is no $method method in " . get_class($this) . "." );
+		throw new \Exception("There is no $method method in " . get_class($this) . "." );
 	}
 }

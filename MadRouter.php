@@ -98,11 +98,11 @@ class MadRouter {
 		$all = '*';
 		$user = MadUser::getInstance();
 		if(isset($config->acl->$all) && ! $user->in($config->acl->$all)) {
-			throw new Exception('Unauthorized.', 401);
+			throw new \Exception('Unauthorized.', 401);
 		}
 		$action = $this->action;
 		if(isset($config->acl->$action) && ! $user->in($config->acl->$action) ) {
-			throw new Exception('Unauthorized.', 401);
+			throw new \Exception('Unauthorized.', 401);
 		}
 		return true;
 	}
@@ -128,7 +128,7 @@ class MadRouter {
 	}
 
 	function ckInternal() {
-		if(! $this->isInternal()) throw new Exception('Not Allowed', 405);
+		if(! $this->isInternal()) throw new \Exception('Not Allowed', 405);
 		return true;
 	}
 

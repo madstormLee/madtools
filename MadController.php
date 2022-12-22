@@ -16,7 +16,7 @@ class MadController {
 
 	function testAction() {
 		if(! $this->user->is('developer') ) {
-			throw new Exception('Unauthorized.', 401);
+			throw new \Exception('Unauthorized.', 401);
 		}
 		if( class_exists('Test') ) {
 			return new Test();
@@ -92,7 +92,7 @@ class MadController {
 		if( preg_match("/Action$/", $method)) {
 			return null;
 		}
-		throw new Exception("Method not found: $method()");
+		throw new \Exception("Method not found: $method()");
 	}
 
 	protected function createAcl($actions) {
